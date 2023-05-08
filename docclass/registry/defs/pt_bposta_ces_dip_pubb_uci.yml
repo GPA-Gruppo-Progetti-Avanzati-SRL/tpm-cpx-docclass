@@ -1,0 +1,157 @@
+# exporter:cpxExporter_pt_bposta_ces_dip_pubb_uci(pt_bposta_ces_dip_pubb_uci) from file:/Users/marioa.imperato/projects/poste/gect/doc-poste-ntt-rev.1.1/cpx/conf_exp_cpx/gect-old-cfgs/applicationContext_UCI.xml
+# concurrency:5
+# query:
+# flag_esportato = false and flag_copia_partner=true and validita_documento='In vigore' and r_full_content_size>0.0  
+docClass:
+ # base-class-id: pt_bposta_ces_dip_pubb_uci
+ class-id: pt_bposta_ces_dip_pubb_uci
+ max-cpx: 100
+ platform: GT
+ cod-cliente: Z0001213
+ servizio: web
+ procedura: CONTRATTI
+ max-docs: 3000
+ max-size: 146800640
+ version: 01.00.00
+ name: "{{.mida}}-{{.ts}}00-0000000-{{.zeta}}-GECT-{{.mida}}001"
+ ext: cpx
+ cos-query: |
+   select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
+   c.metadata.technicalData.objectType = "pt_bposta_ces_dip_pubb_uci" and
+   c.metadata.technicalData.flagEsportato = false and
+   c.metadata.technicalData.flagCopiaPartner = true and
+   c.metadata.validitaDocumento = "In vigore" and
+   c.metadata.technicalData.creationDate < '{now-1d}' and
+   c.metadata.technicalData.creationDate > "2022-12-11T00:00:00.000Z" and
+   c.metadata.technicalData.fullContentSize > 0
+ on-exported:
+  - name: flag_esportato
+    format: "%b"
+    value: true
+ index:
+  - name: r_creation_date
+    value: "lookup:r_creation_date"
+    data-type: date
+    format: "02/01/2006 15:04:05"
+    source-format: "2006-01-02T15:04:05.999Z"
+  - name: r_object_id
+    value: "lookup:r_object_id"
+  - name: id_univoco
+    value: "lookup:id_univoco"
+  - name: numero_pratica
+    value: "lookup:numero_pratica"
+  - name: data_pratica
+    value: "lookup:data_pratica"
+    data-type: date
+    format: "02/01/2006 15:04:05"
+    source-format: "2006-01-02"
+  - name: nome
+    value: "lookup:nome"
+  - name: prodotto
+    value: "lookup:prodotto"
+  - name: codice_rapporto
+    value: "lookup:codice_rapporto"
+  - name: tipo_documento
+    value: "lookup:tipo_documento"
+  - name: nome_documento
+    value: "lookup:nome_documento"
+  - name: codice_fiscale
+    value: "lookup:codice_fiscale"
+  - name: cognome
+    value: "lookup:cognome"
+  - name: id_pdl
+    value: "lookup:id_pdl"
+  - name: frazionario_rapporto
+    value: "lookup:frazionario_rapporto"
+  - name: pratica_fea
+    value: "lookup:pratica_fea"
+  - name: codice_posidonia
+    value: "lookup:codice_posidonia"
+  - name: numero_firme_pdf
+    value: "const:1"
+    data-type: number
+    format: "%d"
+  - name: external_hash
+    value: "lookup:content_hash"
+  - name: Algoritmo
+    value: "const:SHA-256"
+  - name: Identificativo
+    value: "lookup:r_object_id"
+  - name: modalita formazione
+    value: "const:C"
+  - name: tipologia documentale
+    value: "lookup:tipo_documento"
+  - name: tipologia flusso
+    value: "const:Interno"
+    data-type: string
+  - name: tipo registro
+    value: "const:Nessuno"
+    data-type: string
+  - name: data registrazione
+    value: "lookup:r_creation_date"
+    data-type: date
+    format: "02/01/2006 15:04:05"
+    source-format: "2006-01-02T15:04:05.999Z"
+  - name: numero documento
+    value: "lookup:r_object_id"
+  - name: CodiceRegistro
+    value: "lookup:numero_pratica"
+  - name: Oggetto
+    value: "lookup:prodotto"
+  - name: Ruolo
+    value: "const:Produttore"
+  - name: TipoSoggetto
+    value: "const:PG"
+  - name: nominativo
+    value: "const:Poste Italiane S.p.a."
+  - name: numeroallegati
+    value: "const:0"
+    data-type: number
+    format: "%d"
+  - name: idDoc
+    value: "const:"
+  - name: descrizione
+    value: "const:"
+  - name: riservato
+    value: "const:true"
+    data-type: boolean
+  - name: formato
+    value: "lookup:a_content_type"
+  - name: firmatodigitalmente
+    value: "lookup:flag_firma"
+    data-type: boolean
+  - name: sigillatoelettronicamente
+    value: "lookup:flag_epcm"
+    data-type: boolean
+  - name: marcaturatemporale
+    value: "const:false"
+    data-type: boolean
+  - name: ConformitaCopiaImmagineSuSupportoInformativo
+    value: "const:false"
+    data-type: boolean
+  - name: prodottoSoftware
+    value: "const:F"
+  - name: nomeprodotto
+    value: "const:"
+  - name: Versione
+    value: "const:"
+  - name: Produttore
+    value: "const:"
+  - name: nomedocumento
+    value: "lookup:nome_documento"
+  - name: versionedocumento
+    value: "const:1"
+    data-type: string
+  - name: tipomodifica
+    value: "const:"
+    data-type: string
+  - name: codicefiscaleautore
+    value: "const:"
+    data-type: string
+  - name: datamodifica
+    value: "const:"
+    data-type: date
+    format: "02/01/2006 15:04:05"
+    source-format: "2006-01-02T15:04:05.999Z"
+  - name: idDocversioneprecedente
+    value: "const:"

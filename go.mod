@@ -1,3 +1,17 @@
 module tpm-cpx-docclass
 
 go 1.19
+
+require (
+	github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-common v0.0.97
+	github.com/rs/zerolog v1.29.1
+	gopkg.in/yaml.v3 v3.0.1
+)
+
+require (
+	github.com/google/uuid v1.3.0 // indirect
+	github.com/lucasjones/reggen v0.0.0-20200904144131-37ba4fa293bb // indirect
+	github.com/mattn/go-colorable v0.1.12 // indirect
+	github.com/mattn/go-isatty v0.0.16 // indirect
+	golang.org/x/sys v0.4.0 // indirect
+)
