@@ -52,22 +52,23 @@ Di seguito riportiamo la descrizione delle tre entità
 
 #### cpx_doc_class
 
-| campo       | tipo          | nullable | note                                                                                                   | 
-|-------------|---------------|----------|--------------------------------------------------------------------------------------------------------|
-| class_id    | varchar(15)   | NOT NULL | identificativo della classe                                                                            |
-| name        | varchar(40)   | NOT NULL | nome                                                                                                   |
-| childIds    | varchar(80)   | NULL     | non utilizzato                                                                                         |
-| extension   | varchar(3)    | NOT NULL | estensione del file in uscita (`cpx`)                                                                  |
-| cod_cliente | varchar(10)   | NOT NULL | codice zeta del cliente                                                                                |
-| max_cpx     | int           | NOT NULL |                                                                                                        |
-| max_docs    | int           | NOT NULL | numero massimo di documenti in un file                                                                 |
-| max_size    | int           | NOT NULL | dimensione massima del file                                                                            |
-| platform    | varchar(10)   | NOT NULL | codice piattaforma per generazione nomi in output                                                      |
-| servizio    | varchar(10)   | NOT NULL | informazione da indicare all'interno dei file in uscita                                                |
-| procedura   | varchar(10)   | NOT NULL | informazione da indicare all'interno dei file in uscita                                                |
-| version     | varchar(10)   | NOT NULL | informazione da indicare all'interno dei file in uscita                                                |
-| pkg_layout  | varchar(2)    | NULL     | indica il formato specifico dei file (.xml e .inf contenuti). Vale v1 in tutti i casi e v3 in caso GED |
-| sql_query   | varchar(1024) | NOT NULL | query di interrogazione su cosmos-db (colo la parte where)                                             |
+| campo        | tipo          | nullable | note                                                                                                   | 
+|--------------|---------------|----------|--------------------------------------------------------------------------------------------------------|
+| class_id     | varchar(15)   | NOT NULL | identificativo della classe                                                                            |
+| name         | varchar(40)   | NOT NULL | nome                                                                                                   |
+| childIds     | varchar(80)   | NULL     | non utilizzato                                                                                         |
+| extension    | varchar(3)    | NOT NULL | estensione del file in uscita (`cpx`)                                                                  |
+| cod_cliente  | varchar(10)   | NOT NULL | codice zeta del cliente                                                                                |
+| max_cpx      | int           | NOT NULL |                                                                                                        |
+| max_docs     | int           | NOT NULL | numero massimo di documenti in un file                                                                 |
+| max_size     | int           | NOT NULL | dimensione massima del file                                                                            |
+| platform     | varchar(10)   | NOT NULL | codice piattaforma per generazione nomi in output                                                      |
+| servizio     | varchar(10)   | NOT NULL | informazione da indicare all'interno dei file in uscita                                                |
+| procedura    | varchar(10)   | NOT NULL | informazione da indicare all'interno dei file in uscita                                                |
+| version      | varchar(10)   | NOT NULL | informazione da indicare all'interno dei file in uscita                                                |
+| pkg_layout   | varchar(2)    | NULL     | indica il formato specifico dei file (.xml e .inf contenuti). Vale v1 in tutti i casi e v3 in caso GED |
+| sql_query    | varchar(1024) | NOT NULL | query di interrogazione su cosmos-db (colo la parte where)                                             |
+| distinta_ged | bool          | NOT NULL | indica se per la classe documentale deve essere prodotta la distinta GED                               |
 
 #### cpx_ndx_item
 
@@ -81,7 +82,7 @@ Di seguito riportiamo la descrizione delle tre entità
 | format        | varchar(10) | NULL     |                                                                                                                                      |
 | value         | varchar(40) | NOT NULL | una stringa che rappresenta una espressione per calcolare, a partire dal documento in ingresso, il valore da attribuire all'elemento |
 | source_format | varchar(10) | NULL     | utilizzato per le date per il parsing e la trasformazione di formato                                                                 |
-| required      | bit         | NULL     | booleano che indica la obbligatorietà del valore calcolato dal campo `value`                                                         |
+| required      | bool        | NULL     | booleano che indica la obbligatorietà del valore calcolato dal campo `value`                                                         |
 
 #### cpx_out_action
 
@@ -109,7 +110,7 @@ Di seguito riportiamo la descrizione delle tre entità
 |----------|-------------|----------|-------------------------------------------|
 | name     | varchar(40) | NOT NULL | nome della registry                       |
 | class_id | varchar(15) | NOT NULL | identificativo della classe               |
-| enabled  | bit         | NOT NULL | indica l'abilitazione o meno della stessa |
+| enabled  | bool        | NOT NULL | indica l'abilitazione o meno della stessa |
 
 ### Script SQL
 
