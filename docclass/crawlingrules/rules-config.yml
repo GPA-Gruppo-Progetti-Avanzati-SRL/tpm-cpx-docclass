@@ -1,0 +1,155 @@
+- name: pt_test_class
+  disabled: false
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bancoposta_buoni
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bancoposta_consulenza
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bancoposta_fondi
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_ces_dip_post
+  disabled: false
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_ces_dip_pubb
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_ces_dip_pubb_uci
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_ces_pen
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_ces_pen_uci
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_cpi_pres.bp_cpi
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_invio_gp_up
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_minip_bp_compass
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_pres_bp_isp
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_pres_bp_scb
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_prestiti_comp
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_prestiti_db
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_prestiti_find
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_bposta_prev_nofinal
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_contratti
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_contratti_gpm
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_posteassicura.pa
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_postevita.oad
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_postevita.pv
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_postvendita_polizze.pp
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_rca_linear
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_registrazione_oad
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_servizi_motor.g
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_servizi_motor.g_pv
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_servizi_motor.l
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_servizi_motor.l_pv
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"
+- name: pt_spid
+  disabled: true
+  # policy: once
+  policy: once
+  time-range: "00:00-23:59"

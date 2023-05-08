@@ -8,18 +8,12 @@ import (
 	"tpm-cpx-docclass/docclass/model"
 )
 
-// The folder contains a number of .yml files each one for a different class
-//
-//go:embed defs/*
-var docClassFS embed.FS
-var docClassFSRootPath = "defs"
-
 const YamlExtension = ".yml"
 
-func ReadRegistryFromEmbeddedData() (int, error) {
+func ReadRegistryFromEmbeddedData(fs embed.FS, rootPath string) (int, error) {
 
 	registry = make(map[string]model.DocClass, 0)
-	dirEntries, err := docClassFS.ReadDir(docClassFSRootPath)
+	dirEntries, err := fs.ReadDir(rootPath)
 	if err != nil {
 		return len(registry), err
 	}
@@ -32,12 +26,12 @@ func ReadRegistryFromEmbeddedData() (int, error) {
 			continue
 		}
 
-		fileContent, err := docClassFS.ReadFile(path.Join(docClassFSRootPath, fn))
+		fileContent, err := fs.ReadFile(path.Join(rootPath, fn))
 		if err != nil {
 			return len(registry), err
 		}
 
-		dc, err := readDocClassYMLDefinition(fileContent)
+		dc, err := readDocClassYMLDefinition(fn, fileContent)
 		if err != nil {
 			return len(registry), err
 		}
@@ -48,8 +42,10 @@ func ReadRegistryFromEmbeddedData() (int, error) {
 	return len(registry), nil
 }
 
-func readDocClassYMLDefinition(fileContent []byte) (model.DocClass, error) {
+func readDocClassYMLDefinition(fn string, fileContent []byte) (model.DocClass, error) {
 
+	const semLogContext = "doc-class-registry::read-doc-class-from-yaml"
+	log.Info().Str("fn", fn).Msg(semLogContext)
 	var err error
 
 	dc := struct {
@@ -63,7 +59,7 @@ func readDocClassYMLDefinition(fileContent []byte) (model.DocClass, error) {
 	// do some computation on the loaded data.
 	err = dc.DocClass.Finalize()
 	if err != nil {
-		log.Error().Err(err).Send()
+		log.Error().Err(err).Msg(semLogContext)
 	}
 
 	return dc.DocClass, nil

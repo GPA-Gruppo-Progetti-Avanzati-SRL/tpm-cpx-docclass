@@ -2,32 +2,48 @@ package fielddictionary
 
 import (
 	_ "embed"
+	"errors"
 	"fmt"
+	"github.com/rs/zerolog/log"
 )
 
-//go:embed field-dictionary.yml
-var fieldRegistryFile []byte
+//go:embed embedded-dictionary.yml
+var EmbeddedDictionary []byte
 
 type Mapping struct {
 	Campo           string `mapstructure:"campo" yaml:"campo"`
 	DocumentMapping string `mapstructure:"documentMapping" yaml:"documentMapping"`
 }
 
-type FieldRegistry map[string]Mapping
+type FieldDictionary map[string]Mapping
 
-var fieldRegistry FieldRegistry
+var fieldDictionary FieldDictionary
+
+func GetDictionary() (FieldDictionary, error) {
+
+	const semLogContext = "field-dictionary::get-dictionary"
+
+	if fieldDictionary == nil {
+		err := errors.New("field-dictionary not initialized")
+		log.Error().Err(err).Msg(semLogContext)
+		return nil, err
+	}
+
+	return fieldDictionary, nil
+}
 
 func GetMapping(fn string) (Mapping, error) {
 
+	const semLogContext = "field-dictionary::get-mapping"
+
 	var err error
-	if fieldRegistry == nil {
-		fieldRegistry, err = readDictionaryFromEmbeddedData()
-		if err != nil {
-			return Mapping{}, nil
-		}
+	if fieldDictionary == nil {
+		err = errors.New("field-dictionary not initialized")
+		log.Error().Err(err).Msg(semLogContext)
+		return Mapping{}, err
 	}
 
-	if fm, ok := fieldRegistry[fn]; ok {
+	if fm, ok := fieldDictionary[fn]; ok {
 		return fm, nil
 	}
 

@@ -75,7 +75,7 @@ Di seguito riportiamo la descrizione delle tre entità
 | campo         | tipo        | nullable | note                                                                                                                                 | 
 |---------------|-------------|----------|--------------------------------------------------------------------------------------------------------------------------------------|
 | class_id      | varchar(15) | NOT NULL | identificativo della classe                                                                                                          |
-| ndx_id        | int         | NOT NULL | progressivo a partire da 1 che viene usato come chiave insieme alla classe documentale e come id nella dichiarazione del file indice |
+| ndx_id        | varchar(4)  | NOT NULL | progressivo a partire da 1 che viene usato come chiave insieme alla classe documentale e come id nella dichiarazione del file indice |
 | name          | varchar(40) | NOT NULL | nome                                                                                                                                 |
 | type          | varchar(10) | NULL     | costante che vale `User' se non specificato                                                                                          |
 | data_type     | varchar(10) | NULL     | puo' valere `string`, `date` e principalmente viene valorizzato per la gestione del formato delle date insieme al campo `format`     |

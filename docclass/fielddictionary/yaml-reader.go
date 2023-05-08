@@ -5,10 +5,10 @@ import (
 	"strings"
 )
 
-func readDictionaryFromEmbeddedData() (FieldRegistry, error) {
+func ReadDictionaryFromYamlData(yamlData []byte) (FieldDictionary, error) {
 
 	fm := make([]Mapping, 0)
-	err := yaml.Unmarshal(fieldRegistryFile, &fm)
+	err := yaml.Unmarshal(yamlData, &fm)
 	if err != nil {
 		return nil, err
 	}
@@ -23,5 +23,6 @@ func readDictionaryFromEmbeddedData() (FieldRegistry, error) {
 		fr[strings.ToLower(c)] = f
 	}
 
+	fieldDictionary = fr
 	return fr, nil
 }

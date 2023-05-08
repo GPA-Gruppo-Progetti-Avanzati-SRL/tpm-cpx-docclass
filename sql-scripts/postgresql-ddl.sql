@@ -1,10 +1,11 @@
 --
 --
+DROP TABLE If Exists cpx_registry;
 DROP SEQUENCE If Exists cpx_ndx_item;
 DROP TABLE If Exists cpx_out_action;
 DROP TABLE If Exists cpx_doc_class;
 DROP TABLE If Exists cpx_field_dictionary;
-DROP TABLE If Exists cpx_registry;
+
 
 CREATE TABLE cpx_doc_class
 (
@@ -30,7 +31,7 @@ CREATE SEQUENCE cpx_seq;
 CREATE TABLE cpx_ndx_item
 (
     class_id      varchar(15) NOT NULL,
-    ndx_id        int         NOT NULL,
+    ndx_id        varchar(4)  NOT NULL,
     name          varchar(40) NOT NULL,
     type          varchar(10) NULL,
     data_type     varchar(10) NULL,

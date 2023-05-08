@@ -129,6 +129,7 @@ type DocClass struct {
 	SqlQuery         string                    `mapstructure:"cos-query" yaml:"cos-query" json:"cos-query"`
 	PackageTtl       int                       `mapstructure:"pkg-ttl" yaml:"pkg-ttl" json:"pkg-ttl"`
 	DocumentTtl      int                       `mapstructure:"doc-ttl" yaml:"doc-ttl" json:"doc-ttl"`
+	DistintaGED      bool                      `mapstructure:"distinta-ged" yaml:"distinta-ged" json:"distinta-ged"`
 }
 
 func (dc *DocClass) MapToIndex(sourceMap map[string]interface{}) []IndexEntryValue {
@@ -184,7 +185,6 @@ func (dc *DocClass) setDefaultValues() {
 		dc.PackageLayout = "v1"
 	case "v3":
 	default:
-		log.Info().Str(SemLogDocClass, dc.Id).Str("current", dc.PackageLayout).Msg("setting package-layout to v1")
 		dc.PackageLayout = "v1"
 	}
 
