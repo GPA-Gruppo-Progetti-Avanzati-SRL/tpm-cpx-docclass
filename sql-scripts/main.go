@@ -57,7 +57,7 @@ func main() {
 	r := registry.GetRegistry()
 	fmt.Printf("--- Begin of insert into cpx_doc_class\n")
 	for n, dc := range r {
-		classId := n
+		classId := ToSqlString(n)
 		name := ToSqlString(dc.Name)
 		extension := ToSqlString(dc.Ext)
 		codCliente := ToSqlString(dc.CodCliente)
@@ -70,19 +70,30 @@ func main() {
 		version := ToSqlString(dc.Version)
 		layout := ToSqlString(dc.PackageLayout)
 		distintaGED := fmt.Sprintf("%t", dc.DistintaGED)
+		childIds := "NULL"
+		if len(dc.ProducedClassIds) > 0 {
+			var sb strings.Builder
+			for i, p := range dc.ProducedClassIds {
+				if i > 0 {
+					sb.WriteString(",")
+				}
+				sb.WriteString(p)
+			}
+			childIds = ToSqlString(sb.String())
+		}
 		query := ToSqlString(util.StripDuplicateWhiteSpaces(dc.SqlQuery))
-		fmt.Printf("insert into cpx_doc_class (class_id, name, childIds, extension, cod_cliente, max_cpx, max_docs, max_size, platform, servizio, procedura, version, pkg_layout, sql_query, distinta_ged) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) \n",
-			classId, name, "NULL", extension, codCliente, maxCpx, maxDocs, maxSize, platform, servizio, procedura, version, layout, query, distintaGED)
+		fmt.Printf("insert into cpx_doc_class (class_id, name, childIds, extension, cod_cliente, max_cpx, max_docs, max_size, platform, servizio, procedura, version, pkg_layout, sql_query, distinta_ged) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s); \n",
+			classId, name, childIds, extension, codCliente, maxCpx, maxDocs, maxSize, platform, servizio, procedura, version, layout, query, distintaGED)
 	}
-	fmt.Printf("--- End of insert into cpx_field_dictionary: num-inserts=%d\n", len(r))
+	fmt.Printf("--- End of insert into cpx_doc_class: num-inserts=%d\n", len(r))
 
 	fmt.Printf("--- Begin of insert into cpx_ndx_item\n")
 	totalRows := 0
 	for n, dc := range r {
 		fmt.Printf("--- Begin of insert into cpx_ndx_item for class %s\n", n)
-		for _, x := range dc.Index {
-			classId := n
-			ndxId := ToSqlString(x.Id)
+		for i, x := range dc.Index {
+			classId := ToSqlString(n)
+			ndxId := fmt.Sprint(i + 1)
 			name := ToSqlString(x.Name)
 			typ := ToSqlString(x.NdxType)
 			dataTyp := ToSqlString(x.DataType)
@@ -98,13 +109,39 @@ func main() {
 				sourceFormat = ToSqlString(x.SourceFormat)
 			}
 			required := fmt.Sprintf("%t", x.Required)
-			fmt.Printf("insert into cpx_ndx_item (class_id, ndx_id, name, type, data_type, format, value, source_format, required) values(%s, %s, %s, %s, %s, %s, %s, %s, %s) \n",
+			fmt.Printf("insert into cpx_ndx_item (class_id, ndx_id, name, type, data_type, format, value, source_format, required) values(%s, %s, %s, %s, %s, %s, %s, %s, %s); \n",
 				classId, ndxId, name, typ, dataTyp, format, value, sourceFormat, required)
 		}
 		fmt.Printf("--- End of insert into cpx_ndx_item for class %s: num-inserts=%d\n", n, len(dc.Index))
 		totalRows += len(dc.Index)
 	}
 	fmt.Printf("--- End of insert into cpx_ndx_item: num-inserts=%d\n", totalRows)
+
+	fmt.Printf("--- Begin of insert into cpx_out_action\n")
+	totalRows = 0
+	for n, dc := range r {
+		fmt.Printf("--- Begin of insert into cpx_out_action for class %s\n", n)
+		for i, x := range dc.OnExported {
+			classId := ToSqlString(n)
+			actionId := fmt.Sprint(i)
+			name := ToSqlString(x.Name)
+			format := "NULL"
+			if x.Format != "" {
+				format = ToSqlString(x.Format)
+			}
+
+			value := ToSqlString(x.StringValue)
+			fieldName := "NULL"
+			if x.FieldName != "" {
+				fieldName = ToSqlString(x.FieldName)
+			}
+			fmt.Printf("insert into cpx_out_action (class_id, action_id, name, format, value, field_name) values(%s, %s, %s, %s, %s, %s) \n",
+				classId, actionId, name, format, value, fieldName)
+		}
+		fmt.Printf("--- End of insert into cpx_out_action for class %s: num-inserts=%d\n", n, len(dc.OnExported))
+		totalRows += len(dc.OnExported)
+	}
+	fmt.Printf("--- End of insert into cpx_out_action: num-inserts=%d\n", totalRows)
 
 }
 
