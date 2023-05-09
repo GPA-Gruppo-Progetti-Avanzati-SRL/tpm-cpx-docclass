@@ -31,14 +31,14 @@ CREATE TABLE cpx_doc_class
 CREATE TABLE cpx_ndx_item
 (
     class_id      varchar(30) NOT NULL,
-    ndx_id        int  NOT NULL,
+    ndx_id        int         NOT NULL,
     name          varchar(80) NOT NULL,
     type          varchar(10) NULL,
     data_type     varchar(10) NULL,
     format        varchar(20) NULL,
     value         varchar(80) NOT NULL,
     source_format varchar(30) NULL,
-    required      bool,
+    required      bool        ,
 
     CONSTRAINT PK_class_id_ndx_id PRIMARY KEY (class_id, ndx_id),
 
@@ -72,7 +72,7 @@ CREATE TABLE cpx_registry
 (
     name     varchar(80) NOT NULL,
     class_id varchar(30) NOT NULL,
-    enabled  bool         not null,
+    enabled  bool        not null,
 
     CONSTRAINT PK_name_class_id PRIMARY KEY (name, class_id)
 );

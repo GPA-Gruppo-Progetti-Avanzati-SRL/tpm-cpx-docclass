@@ -54,8 +54,8 @@ Di seguito riportiamo la descrizione delle tre entità
 
 | campo        | tipo          | nullable | note                                                                                                   | 
 |--------------|---------------|----------|--------------------------------------------------------------------------------------------------------|
-| class_id     | varchar(15)   | NOT NULL | identificativo della classe                                                                            |
-| name         | varchar(40)   | NOT NULL | nome                                                                                                   |
+| class_id     | varchar(30)   | NOT NULL | identificativo della classe                                                                            |
+| name         | varchar(80)   | NOT NULL | nome                                                                                                   |
 | childIds     | varchar(80)   | NULL     | non utilizzato                                                                                         |
 | extension    | varchar(3)    | NOT NULL | estensione del file in uscita (`cpx`)                                                                  |
 | cod_cliente  | varchar(10)   | NOT NULL | codice zeta del cliente                                                                                |
@@ -74,25 +74,25 @@ Di seguito riportiamo la descrizione delle tre entità
 
 | campo         | tipo        | nullable | note                                                                                                                                 | 
 |---------------|-------------|----------|--------------------------------------------------------------------------------------------------------------------------------------|
-| class_id      | varchar(15) | NOT NULL | identificativo della classe                                                                                                          |
-| ndx_id        | varchar(4)  | NOT NULL | progressivo a partire da 1 che viene usato come chiave insieme alla classe documentale e come id nella dichiarazione del file indice |
-| name          | varchar(40) | NOT NULL | nome                                                                                                                                 |
+| class_id      | varchar(30) | NOT NULL | identificativo della classe                                                                                                          |
+| ndx_id        | int         | NOT NULL | progressivo a partire da 1 che viene usato come chiave insieme alla classe documentale e come id nella dichiarazione del file indice |
+| name          | varchar(80) | NOT NULL | nome                                                                                                                                 |
 | type          | varchar(10) | NULL     | costante che vale `User' se non specificato                                                                                          |
 | data_type     | varchar(10) | NULL     | puo' valere `string`, `date` e principalmente viene valorizzato per la gestione del formato delle date insieme al campo `format`     |
-| format        | varchar(10) | NULL     |                                                                                                                                      |
-| value         | varchar(40) | NOT NULL | una stringa che rappresenta una espressione per calcolare, a partire dal documento in ingresso, il valore da attribuire all'elemento |
-| source_format | varchar(10) | NULL     | utilizzato per le date per il parsing e la trasformazione di formato                                                                 |
+| format        | varchar(20) | NULL     |                                                                                                                                      |
+| value         | varchar(80) | NOT NULL | una stringa che rappresenta una espressione per calcolare, a partire dal documento in ingresso, il valore da attribuire all'elemento |
+| source_format | varchar(30) | NULL     | utilizzato per le date per il parsing e la trasformazione di formato                                                                 |
 | required      | bool        | NULL     | booleano che indica la obbligatorietà del valore calcolato dal campo `value`                                                         |
 
 #### cpx_out_action
 
 | campo      | tipo        | nullable | note                                                                                                                                                     | 
 |------------|-------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| class_id   | varchar(15) | NOT NULL | identificativo della classe                                                                                                                              |
+| class_id   | varchar(30) | NOT NULL | identificativo della classe                                                                                                                              |
 | action_id  | int         | NOT NULL | identificativo dell'azione per completare la primary key                                                                                                 |
-| name       | varchar(40) | NOT NULL | nome del campo che insieme al campo field_name e alla tabella di lookup field_dictionary indica il campo da aggiornare nel documento una volta esportato |
-| format     | varchar(10) | NULL     | utilizzo analogo al caso dell'indice.                                                                                                                    |
-| value      | varchar(40) | NOT NULL | una stringa che rappresenta una espressione per calcolare, a partire dal documento in ingresso, il valore da attribuire all'elemento                     |
+| name       | varchar(80) | NOT NULL | nome del campo che insieme al campo field_name e alla tabella di lookup field_dictionary indica il campo da aggiornare nel documento una volta esportato |
+| format     | varchar(20) | NULL     | utilizzo analogo al caso dell'indice.                                                                                                                    |
+| value      | varchar(80) | NOT NULL | una stringa che rappresenta una espressione per calcolare, a partire dal documento in ingresso, il valore da attribuire all'elemento                     |
 | field_name | varchar(40) | NULL     | viene utilizzato per stabilire il campo da aggiornare nel documento in uscita.                                                                           |
 
 
@@ -100,7 +100,7 @@ Di seguito riportiamo la descrizione delle tre entità
 
 | campo            | tipo        | nullable | note                                                                              | 
 |------------------|-------------|----------|-----------------------------------------------------------------------------------|
-| name             | varchar(40) | NOT NULL | nome del campo come referenziato nelle tabelle cpx_ndx_item e cpx_out_action      |
+| name             | varchar(80) | NOT NULL | nome del campo come referenziato nelle tabelle cpx_ndx_item e cpx_out_action      |
 | document_mapping | varchar(80) | NOT NULL | corrispondenza con il nome json nel documento che viene inviato in conservazione. |
 
 
@@ -108,8 +108,8 @@ Di seguito riportiamo la descrizione delle tre entità
 
 | campo    | tipo        | nullable | note                                      | 
 |----------|-------------|----------|-------------------------------------------|
-| name     | varchar(40) | NOT NULL | nome della registry                       |
-| class_id | varchar(15) | NOT NULL | identificativo della classe               |
+| name     | varchar(80) | NOT NULL | nome della registry                       |
+| class_id | varchar(30) | NOT NULL | identificativo della classe               |
 | enabled  | bool        | NOT NULL | indica l'abilitazione o meno della stessa |
 
 ### Script SQL
