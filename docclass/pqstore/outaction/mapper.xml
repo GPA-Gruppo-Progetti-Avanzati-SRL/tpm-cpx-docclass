@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlmapper namespace="outaction.OutActionEntity" >
+
+    <select id='select'  >
+        select  class_id , action_id , name , format , value , field_name
+        from cpx_out_action
+        <include refid='filter_where_clause' />
+
+        <if test=".filter.OrderBy" >
+            order by ${.filter.OrderBy}
+        </if>
+
+        <if test="gt .filter.Limit 0" >
+            limit ${.filter.Limit}
+        </if>
+
+        <if test="gt .filter.Offset 0" >
+            offset ${.filter.Offset}
+        </if>
+
+    </select>
+    <select id="selectByPrimaryKey" >
+        select  class_id , action_id , name , format , value , field_name
+        from cpx_out_action
+        where  class_id = #{.pk.ClassId}  and action_id = #{.pk.ActionId} 
+    </select>
+
+    <select id='count'  >
+        select count(*)
+        from cpx_out_action
+        <include refid='filter_where_clause' />
+
+        <if test=".filter.OrderBy" >
+            order by ${.filter.OrderBy}
+        </if>
+    </select>
+
+    <sql id='filter_where_clause' >
+        <where >
+            <foreach collection='.filter.OrListOfCriteria' item='criteria' separator='or' >
+                <trim prefix='(' suffix=')' prefixOverrides='and' >
+                    <foreach collection='.criteria.AndListOfCriterion' item='criterion' >
+                        <choose>
+                            <when test='eq .criterion.Type "NoValue"' >
+                                and ${.criterion.Condition}
+                            </when>
+                            <when test='eq .criterion.Type "SingleValue"' >
+                                and ${.criterion.Condition} #{.criterion.Value}
+                            </when>
+                            <when test='eq .criterion.Type "BetweenValue"' >
+                                and ${.criterion.Condition} #{.criterion.Value} and #{.criterion.secondValue}
+                            </when>
+                            <when test='eq .criterion.Type "ListValue"' >
+                                and ${.criterion.Condition}
+                                <foreach collection='.criterion.Value' item='listItem' open='(' close=')' separator=',' >
+                                    #{.listItem}
+                                </foreach>
+                            </when>
+                        </choose>
+                    </foreach>
+                </trim>
+            </foreach>
+        </where>
+    </sql>
+    <update id="updateByPrimaryKey" >
+        update cpx_out_action
+        <set >
+        </set>
+        where  class_id = #{.pk.ClassId}  and action_id = #{.pk.ActionId} 
+    </update>
+
+   <update id="update" >
+        update cpx_out_action
+        <set >
+        </set>
+        <include refid='filter_where_clause' />
+    </update>
+
+</sqlmapper>

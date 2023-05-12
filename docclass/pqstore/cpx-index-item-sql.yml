@@ -1,0 +1,91 @@
+name: IndexItem
+properties:
+  folder-path: "./indexitem"
+  struct-name: IndexItemEntity
+  db-type: "view"
+  db-name: "cpx_ndx_item"
+  package: "github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/pqstore/indexitem"
+ddl: |
+  class_id      varchar(30) NOT NULL,
+  ndx_id        int         NOT NULL,
+  name          varchar(80) NOT NULL,
+  type          varchar(10) NULL,
+  data_type     varchar(10) NULL,
+  format        varchar(20) NULL,
+  value         varchar(80) NOT NULL,
+  source_format varchar(30) NULL,
+  required      bool        ,  
+  CONSTRAINT PK_class_id_ndx_id PRIMARY KEY (class_id, ndx_id),  
+  CONSTRAINT FK_cpx_ndx_item_doc_class FOREIGN KEY (class_id)
+      REFERENCES cpx_doc_class (class_id)
+fields:
+  - name: classId
+    db-name: class_id
+    primary-key: true
+    type: string
+    nullable: false
+    max-length: 30
+    with-criterion: true
+    sample-value: pt_contratti
+  - name: ndxId
+    db-name: ndx_id
+    primary-key: true
+    type: int
+    nullable: false
+    with-criterion: true
+    sample-value: 1
+  - name: name
+    db-name: name
+    type: string
+    nullable: false
+    max-length: 80
+    with-criterion: false
+    with-update: false
+    sample-value: "nome_documento"
+  - name: ndxType
+    db-name: type
+    type: string
+    nullable: true
+    max-length: 10
+    with-criterion: false
+    with-update: false
+    sample-value: "User"
+  - name: dataType
+    db-name: data_type
+    type: string
+    max-length: 10
+    nullable: true
+    with-criterion: false
+    with-update: false
+    sample-value: string
+  - name: format
+    db-name: format
+    type: string
+    max-length: 20
+    nullable: true
+    with-criterion: false
+    with-update: false
+    #sample-value: "%s"
+  - name: value
+    db-name: value
+    type: string
+    max-length: 80
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: "lookup:nome_documento"
+  - name: sourceFormat
+    db-name: source_format
+    type: string
+    nullable: true
+    with-criterion: false
+    with-update: false
+    # sample-value: 3000
+  - name: required
+    db-name: required
+    type: bool
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: false
+

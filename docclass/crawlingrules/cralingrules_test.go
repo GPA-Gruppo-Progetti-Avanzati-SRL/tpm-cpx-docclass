@@ -2,12 +2,12 @@ package crawlingrules_test
 
 import (
 	_ "embed"
+	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/crawlingrules"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/require"
 	"os"
 	"testing"
-	"tpm-cpx-docclass/docclass/crawlingrules"
 )
 
 func TestCrawlingRules(t *testing.T) {

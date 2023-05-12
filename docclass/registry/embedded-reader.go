@@ -2,10 +2,10 @@ package registry
 
 import (
 	"embed"
+	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/model"
 	"github.com/rs/zerolog/log"
 	"gopkg.in/yaml.v3"
 	"path"
-	"tpm-cpx-docclass/docclass/model"
 )
 
 const YamlExtension = ".yml"

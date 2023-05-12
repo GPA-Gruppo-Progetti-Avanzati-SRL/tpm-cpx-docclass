@@ -11,7 +11,7 @@ CREATE TABLE cpx_doc_class
 (
     class_id     varchar(30)   NOT NULL primary key,
     name         varchar(80)   NOT NULL,
-    childIds     varchar(80)   NULL,
+    child_ids    varchar(80)   NULL,
     extension    varchar(3)    NOT NULL,
     cod_cliente  varchar(10)   NOT NULL,
     max_cpx      int           NOT NULL,

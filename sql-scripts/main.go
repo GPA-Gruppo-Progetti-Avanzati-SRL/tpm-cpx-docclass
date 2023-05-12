@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-common/util"
+	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/crawlingrules"
+	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/fielddictionary"
+	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/registry"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"os"
 	"strings"
-	"tpm-cpx-docclass/docclass/crawlingrules"
-	"tpm-cpx-docclass/docclass/fielddictionary"
-	"tpm-cpx-docclass/docclass/registry"
 )
 
 func main() {
@@ -82,7 +82,7 @@ func main() {
 			childIds = ToSqlString(sb.String())
 		}
 		query := ToSqlString(util.StripDuplicateWhiteSpaces(dc.SqlQuery))
-		fmt.Printf("insert into cpx_doc_class (class_id, name, childIds, extension, cod_cliente, max_cpx, max_docs, max_size, platform, servizio, procedura, version, pkg_layout, sql_query, distinta_ged) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s); \n",
+		fmt.Printf("insert into cpx_doc_class (class_id, name, child_ids, extension, cod_cliente, max_cpx, max_docs, max_size, platform, servizio, procedura, version, pkg_layout, sql_query, distinta_ged) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s); \n",
 			classId, name, childIds, extension, codCliente, maxCpx, maxDocs, maxSize, platform, servizio, procedura, version, layout, query, distintaGED)
 	}
 	fmt.Printf("--- End of insert into cpx_doc_class: num-inserts=%d\n", len(r))

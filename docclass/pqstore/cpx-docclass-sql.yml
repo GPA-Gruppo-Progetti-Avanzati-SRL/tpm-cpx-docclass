@@ -1,0 +1,141 @@
+name: DOcClass
+properties:
+  folder-path: "./docclass"
+  struct-name: DocClassEntity
+  db-type: "view"
+  db-name: "cpx_doc_class"
+  package: "github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/pqstore/docclass"
+ddl: |
+  class_id     varchar(30)   NOT NULL primary key,
+  name         varchar(80)   NOT NULL,
+  child_ids    varchar(80)   NULL,
+  extension    varchar(3)    NOT NULL,
+  cod_cliente  varchar(10)   NOT NULL,
+  max_cpx      int           NOT NULL,
+  max_docs     int           NOT NULL,
+  max_size     int           NOT NULL,
+  platform     varchar(10)   NOT NULL,
+  servizio     varchar(10)   NOT NULL,
+  procedura    varchar(10)   NOT NULL,
+  version      varchar(10)   NOT NULL,
+  pkg_layout   varchar(2)    NULL,
+  sql_query    varchar(1024) NOT NULL,
+  distinta_ged bool          not null
+fields:
+  - name: id
+    db-name: class_id
+    primary-key: true
+    type: string
+    nullable: false
+    max-length: 30
+    with-criterion: true
+    sample-value: pt_contratti
+  - name: name
+    db-name: name
+    type: string
+    nullable: false
+    max-length: 80
+    with-criterion: false
+    with-update: false
+    sample-value: "{{.mida}}-{{.ts}}00-0000000-{{.zeta}}-GECT-{{.mida}}001"
+  - name: producedClassIds
+    db-name: child_ids
+    type: string
+    nullable: true
+    max-length: 80
+    with-criterion: false
+    with-update: false
+    ## sample-value: ""
+  - name: ext
+    db-name: extension
+    type: string
+    max-length: 3
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: cpx
+  - name: codCliente
+    db-name: cod_cliente
+    type: string
+    max-length: 10
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: Z0055048
+  - name: maxCpx
+    db-name: max_cpx
+    type: int
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: 100
+  - name: maxDoc
+    db-name: max_docs
+    type: int
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: 3000
+  - name: maxSize
+    db-name: max_size
+    type: int
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: 146800640
+  - name: platform
+    db-name: platform
+    type: string
+    max-length: 10
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: GT
+  - name: servizio
+    db-name: servizio
+    type: string
+    max-length: 10
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: GECT
+  - name: procedura
+    db-name: procedura
+    type: string
+    max-length: 10
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: CONTRATTI
+  - name: version
+    db-name: version
+    type: string
+    max-length: 10
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: 01.00.00
+  - name: packageLayout
+    db-name: pkg_layout
+    type: string
+    max-length: 2
+    nullable: true
+    with-criterion: false
+    with-update: false
+    sample-value: v1
+  - name: sqlQuery
+    db-name: sql_query
+    type: string
+    max-length: 1024
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: ""
+  - name: distintaGED
+    db-name: distinta_ged
+    type: bool
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: false
+

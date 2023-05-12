@@ -1,0 +1,66 @@
+name: OutAction
+properties:
+  folder-path: "./outaction"
+  struct-name: OutActionEntity
+  db-type: "view"
+  db-name: "cpx_out_action"
+  package: "github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/pqstore/outaction"
+ddl: |
+  class_id   varchar(30) NOT NULL,
+  action_id  int         NOT NULL,
+  name       varchar(80) NOT NULL,
+  format     varchar(20) NULL,
+  value      varchar(80) NOT NULL,
+  field_name varchar(40) NULL,
+  
+  CONSTRAINT PK_class_id_action_id PRIMARY KEY (class_id, action_id),
+  
+  CONSTRAINT FK_cpx_out_Action_doc_class FOREIGN KEY (class_id)
+      REFERENCES cpx_doc_class (class_id)
+fields:
+  - name: classId
+    db-name: class_id
+    primary-key: true
+    type: string
+    nullable: false
+    max-length: 30
+    with-criterion: true
+    sample-value: pt_contratti
+  - name: actionId
+    db-name: action_id
+    primary-key: true
+    type: int
+    nullable: false
+    with-criterion: true
+    sample-value: 1
+  - name: name
+    db-name: name
+    type: string
+    nullable: false
+    max-length: 80
+    with-criterion: false
+    with-update: false
+    sample-value: "stato_sostitutiva"
+  - name: format
+    db-name: format
+    type: string
+    max-length: 20
+    nullable: true
+    with-criterion: false
+    with-update: false
+    sample-value: "%s"
+  - name: value
+    db-name: value
+    type: string
+    max-length: 80
+    nullable: false
+    with-criterion: false
+    with-update: false
+    sample-value: "7"
+  - name: fieldName
+    db-name: field_name
+    type: string
+    nullable: true
+    with-criterion: false
+    with-update: false
+    # sample-value: 3000

@@ -1,9 +1,13 @@
-module tpm-cpx-docclass
+module github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass
 
 go 1.19
 
 require (
+	github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-batis v0.0.7-RC5
 	github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-common v0.0.97
+	github.com/bits-and-blooms/bitset v1.7.0
+	github.com/jmoiron/sqlx v1.3.5
+	github.com/lib/pq v1.2.0
 	github.com/rs/zerolog v1.29.1
 	github.com/stretchr/testify v1.8.1
 	gopkg.in/yaml.v3 v3.0.1

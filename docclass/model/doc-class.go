@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-common/util"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-common/util/templateutil"
+	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/fielddictionary"
 	"github.com/rs/zerolog/log"
 	"strconv"
 	"strings"
 	"time"
-	"tpm-cpx-docclass/docclass/fielddictionary"
 )
 
 const (
