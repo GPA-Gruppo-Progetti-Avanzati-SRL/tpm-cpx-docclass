@@ -16,15 +16,15 @@ docClass:
  name: "{{.mida}}-{{.ts}}00-0000000-{{.zeta}}-GECT-{{.mida}}001"
  ext: cpx
  cos-query: |
-   select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
-   c.metadata.technicalData.objectType = "pt_bancoposta_consulenza" and
-   is_defined(c.metadata.customData.stream_id) and
-   c.metadata.ambito = "BANCOPOSTA" and
-   c.metadata.famigliaProdotto = "CONSULENZA" and
-   c.metadata.prodotto = 'INIZIATIVA CLIENTE VENDITA' and
-   c.metadata.technicalData.creationDate < '{now-1d}' and
-   c.metadata.technicalData.creationDate > "2022-12-11T00:00:00.000Z" and
-   c.metadata.nomeDocumento = 'RIEPILOGO PRATICA' and c.metadata.validitaDocumento='In vigore' and (not is_defined(c.metadata.technicalData.statoExp) or c.metadata.technicalData.statoExp <> "11")
+  select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
+  c.metadata.technicalData.objectType = "pt_bancoposta_consulenza" and
+  is_defined(c.metadata.customData.stream_id) and
+  c.metadata.ambito = "BANCOPOSTA" and
+  c.metadata.famigliaProdotto = "CONSULENZA" and
+  c.metadata.prodotto = 'INIZIATIVA CLIENTE VENDITA' and
+  c.metadata.technicalData.creationDate < '{now-1d}' and
+  c.metadata.technicalData.creationDate > "2022-12-11T00:00:00.000Z" and
+  c.metadata.nomeDocumento = 'RIEPILOGO PRATICA' and c.metadata.validitaDocumento='In vigore' and (not is_defined(c.metadata.technicalData.statoExp) or c.metadata.technicalData.statoExp <> "11")
  on-exported:
   - name: stato_exp
     format: "%s"

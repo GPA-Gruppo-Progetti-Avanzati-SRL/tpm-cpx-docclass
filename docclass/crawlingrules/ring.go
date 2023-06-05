@@ -7,7 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-//go:embed rules-config.yml
+//go:embed crawling-rules.yml
 var RulesConfigYaml []byte
 
 func NewRing(cfg []Config) (RuleRing, error) {

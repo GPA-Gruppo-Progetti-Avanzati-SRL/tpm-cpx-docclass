@@ -8,6 +8,7 @@ import (
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-common/util/templateutil"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/fielddictionary"
 	"github.com/rs/zerolog/log"
+	"gopkg.in/yaml.v3"
 	"strconv"
 	"strings"
 	"time"
@@ -125,11 +126,33 @@ type DocClass struct {
 	PackageLayout    string                    `mapstructure:"package-layout" yaml:"package-layout" json:"package-layout"`
 	Index            []IndexEntryDefinition    `mapstructure:"index" yaml:"index" json:"index" json:"index"`
 	OnExported       []OnExportEntryDefinition `mapstructure:"on-exported" yaml:"on-exported" json:"on-exported" json:"on-exported"`
-	EsQuery          string                    `mapstructure:"-" yaml:"-" json:"-"` // Deprecated
 	SqlQuery         string                    `mapstructure:"cos-query" yaml:"cos-query" json:"cos-query"`
 	PackageTtl       int                       `mapstructure:"pkg-ttl" yaml:"pkg-ttl" json:"pkg-ttl"`
 	DocumentTtl      int                       `mapstructure:"doc-ttl" yaml:"doc-ttl" json:"doc-ttl"`
 	DistintaGED      bool                      `mapstructure:"distinta-ged" yaml:"distinta-ged" json:"distinta-ged"`
+}
+
+func ReadDocClassYMLDefinition(fn string, fileContent []byte) (DocClass, error) {
+
+	const semLogContext = "doc-class-registry::read-doc-class-from-yaml"
+	log.Info().Str("fn", fn).Msg(semLogContext)
+	var err error
+
+	dc := struct {
+		DocClass DocClass `yaml:"docClass"`
+	}{}
+	err = yaml.Unmarshal(fileContent, &dc)
+	if err != nil {
+		return DocClass{}, err
+	}
+
+	// do some computation on the loaded data.
+	err = dc.DocClass.Finalize()
+	if err != nil {
+		log.Error().Err(err).Msg(semLogContext)
+	}
+
+	return dc.DocClass, nil
 }
 
 func (dc *DocClass) MapToIndex(sourceMap map[string]interface{}) []IndexEntryValue {
@@ -142,6 +165,22 @@ func (dc *DocClass) MapToIndex(sourceMap map[string]interface{}) []IndexEntryVal
 	}
 
 	return m
+}
+
+func (dc *DocClass) SqlQueryText() string {
+	const semLogContext = "doc-class::sql-query-text"
+
+	durs := []time.Duration{0, -24 * 1 * time.Hour, -24 * 2 * time.Hour, -24 * 3 * time.Hour, -24 * 4 * time.Hour}
+
+	q := dc.SqlQuery
+	now := time.Now().UTC()
+	for i := 1; i <= 4; i++ {
+		nowMinusXDays := now.Add(durs[i]).Format(time.RFC3339Nano)
+		q = strings.Replace(q, fmt.Sprintf("{now-%dd}", i), nowMinusXDays, -1)
+	}
+
+	log.Trace().Str(SemLogDocClass, dc.Id).Str("query", q).Msg(semLogContext)
+	return q
 }
 
 func (dc *DocClass) Finalize() error {

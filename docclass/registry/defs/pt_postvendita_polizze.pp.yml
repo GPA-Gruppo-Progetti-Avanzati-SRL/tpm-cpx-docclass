@@ -16,13 +16,13 @@ docClass:
  name: "{{.mida}}-{{.ts}}00-0000000-{{.zeta}}-GECT-{{.mida}}001"
  ext: cpx
  cos-query: |
-   select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
-   c.metadata.technicalData.objectType = "pt_postvendita_polizze" and
-   is_defined(c.metadata.codiceRapporto) AND
-   c.metadata.technicalData.creationDate < '{now-1d}' AND
-   c.metadata.technicalData.creationDate > "2022-12-11T00:00:00.000Z" and
-   c.metadata.technicalData.hidden = false AND
-   c.metadata.technicalData.flagEsportato = false
+  select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
+  c.metadata.technicalData.objectType = "pt_postvendita_polizze" and
+  is_defined(c.metadata.codiceRapporto) AND
+  c.metadata.technicalData.creationDate < '{now-1d}' AND
+  c.metadata.technicalData.creationDate > "2022-12-11T00:00:00.000Z" and
+  c.metadata.technicalData.hidden = false AND
+  c.metadata.technicalData.flagEsportato = false
  on-exported:
   - name: flag_esportato
     format: "%b"

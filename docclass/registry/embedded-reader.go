@@ -3,8 +3,6 @@ package registry
 import (
 	"embed"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/model"
-	"github.com/rs/zerolog/log"
-	"gopkg.in/yaml.v3"
 	"path"
 )
 
@@ -31,7 +29,7 @@ func ReadRegistryFromEmbeddedData(fs embed.FS, rootPath string) (int, error) {
 			return len(registry), err
 		}
 
-		dc, err := readDocClassYMLDefinition(fn, fileContent)
+		dc, err := model.ReadDocClassYMLDefinition(fn, fileContent)
 		if err != nil {
 			return len(registry), err
 		}
@@ -42,42 +40,25 @@ func ReadRegistryFromEmbeddedData(fs embed.FS, rootPath string) (int, error) {
 	return len(registry), nil
 }
 
-func readDocClassYMLDefinition(fn string, fileContent []byte) (model.DocClass, error) {
-
-	const semLogContext = "doc-class-registry::read-doc-class-from-yaml"
-	log.Info().Str("fn", fn).Msg(semLogContext)
-	var err error
-
-	dc := struct {
-		DocClass model.DocClass `yaml:"docClass"`
-	}{}
-	err = yaml.Unmarshal(fileContent, &dc)
-	if err != nil {
-		return model.DocClass{}, err
-	}
-
-	// do some computation on the loaded data.
-	err = dc.DocClass.Finalize()
-	if err != nil {
-		log.Error().Err(err).Msg(semLogContext)
-	}
-
-	return dc.DocClass, nil
-}
-
-func IsConfigured(dcId string) bool {
-	_, ok := registry[dcId]
-	return ok
-}
-
-func TraceRegistry() {
-	log.Trace().Int("num-entries", len(registry)).Msg("document class registry")
-
-	numFields := 0
-	for n, entry := range registry {
-		numFields += len(entry.Index)
-		log.Trace().Int("num-indexes", len(entry.Index)).Str("docclass", n).Msg("document class info")
-	}
-
-	log.Trace().Int("total-num-indexes", numFields).Int("num-docclass", len(registry)).Msg("registry info")
-}
+//func readDocClassYMLDefinition(fn string, fileContent []byte) (model.DocClass, error) {
+//
+//	const semLogContext = "doc-class-registry::read-doc-class-from-yaml"
+//	log.Info().Str("fn", fn).Msg(semLogContext)
+//	var err error
+//
+//	dc := struct {
+//		DocClass model.DocClass `yaml:"docClass"`
+//	}{}
+//	err = yaml.Unmarshal(fileContent, &dc)
+//	if err != nil {
+//		return model.DocClass{}, err
+//	}
+//
+//	// do some computation on the loaded data.
+//	err = dc.DocClass.Finalize()
+//	if err != nil {
+//		log.Error().Err(err).Msg(semLogContext)
+//	}
+//
+//	return dc.DocClass, nil
+//}

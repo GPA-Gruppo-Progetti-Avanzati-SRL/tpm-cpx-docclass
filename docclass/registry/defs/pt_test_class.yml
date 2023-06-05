@@ -13,16 +13,11 @@ docClass:
   cod-cliente: Z0055048
   servizio: GECT
   procedura: CONTRATTI
-  # v1 cpx std, v2: export-partner, v3: cpx ged
-  # package-layout: v3
   max-docs: 3000
   max-size: 146800640
   version: 01.00.00
   name: "{{.mida}}-{{.ts}}00-0000000-{{.zeta}}-GECT-{{.mida}}001"
   ext: cpx
-  cos-query: |
-    select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
-    c.metadata.nomeDocumento in ('CH7', 'CH7_PG')
   pkg-ttl: 4
   doc-ttl: 5
   on-exported:

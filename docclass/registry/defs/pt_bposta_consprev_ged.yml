@@ -4,22 +4,22 @@ docClass:
  platform: GD
  cod-cliente: Z0007440
  servizio: Web
- procedura: CONTRATTI
+ procedura: GED
  max-docs: 1000
  max-size: 146800640
  version: 01.00.00
  name: "{{.ts}}_GED_{{.mida}}"
  ext: cpx
  cos-query: |
-   select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
-   c.metadata.technicalData.objectType = "pt_bposta_consprev" and
-   c.metadata.technicalData.creationDate < '{now-1d}' and
-   c.metadata.technicalData.creationDate > "2022-12-11T00:00:00.000Z" and
-   c.metadata.technicalData.fullContentSize > 0 and
-   c.metadata.technicalData.hidden = false and
-   c.metadata.validitaDocumento = "In vigore" and
-   c.metadata.technicalData.flagCopiaPartner = true and
-   (not is_defined(c.metadata.technicalData.statoExp) or c.metadata.technicalData.statoExp != "12")
+  select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
+  c.metadata.technicalData.objectType = "pt_bposta_consprev" and
+  c.metadata.technicalData.creationDate < '{now-1d}' and
+  c.metadata.technicalData.creationDate > "2022-12-11T00:00:00.000Z" and
+  c.metadata.technicalData.fullContentSize > 0 and
+  c.metadata.technicalData.hidden = false and
+  c.metadata.validitaDocumento = "In vigore" and
+  c.metadata.technicalData.flagCopiaPartner = true and
+  (not is_defined(c.metadata.technicalData.statoExp) or c.metadata.technicalData.statoExp != "12")
  package-layout: v3
  on-exported:
   - name: stato_exp

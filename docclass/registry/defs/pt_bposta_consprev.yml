@@ -1,10 +1,5 @@
-# exporter:cpxExporter_pt_bposta_consprev(pt_bposta_consprev) from file:/Users/marioa.imperato/projects/poste/gect/doc-poste-ntt-rev.1.1/cpx/conf_exp_cpx/gect-old-cfgs/applicationContext_OAD.xml
-# concurrency:2
-# query:
-# stream_id != ' ' and ambito = 'PV' and famiglia_prodotto = 'POLIZZE' and prodotto = 'VITA' and nome_documento = 'CVITA' and validita_documento='In vigore' and (stato_exp is null or stato_exp != 11) 
 docClass:
- # base-class-id: pt_bposta_consprev
- class-id: pt_bposta_consprev.pv
+ class-id: pt_bposta_consprev
  max-cpx: 100
  platform: GT
  cod-cliente: Z0007440
@@ -16,13 +11,13 @@ docClass:
  name: "{{.mida}}-{{.ts}}00-0000000-{{.zeta}}-GECT-{{.mida}}001"
  ext: cpx
  cos-query: |
-   select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
-   c.metadata.technicalData.objectType = "pt_bposta_consprev" and
-   c.metadata.technicalData.creationDate < '{now-4d}' AND
-   c.metadata.technicalData.creationDate > "2022-12-11T00:00:00.000Z" and
-   c.metadata.technicalData.hidden = false AND
-   c.metadata.customData.flag_conserv_pv = true AND
-   c.metadata.technicalData.flagEsportato = false
+  select c.metadata.idUnivoco, c.metadata.nomeDocumento, c.metadata.numeroPratica, c.metadata.technicalData.fullContentSize from c where
+  c.metadata.technicalData.objectType = "pt_bposta_consprev" and
+  c.metadata.technicalData.creationDate < '{now-4d}' AND
+  c.metadata.technicalData.creationDate > "2022-12-11T00:00:00.000Z" and
+  c.metadata.technicalData.hidden = false AND
+  c.metadata.customData.flag_conserv_pv = true AND
+  c.metadata.technicalData.flagEsportato = false
  on-exported:
   - name: flag_esportato
     format: "%b"
