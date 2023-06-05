@@ -8,7 +8,9 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func NewRing(cfg []Config) (RuleRing, error) {
+var rulesCfg []Config
+
+func NewRing() (RuleRing, error) {
 
 	const semLogContext = "doc-class-yaml::new-ring"
 
@@ -18,7 +20,7 @@ func NewRing(cfg []Config) (RuleRing, error) {
 	checkMap := make(map[string]struct{})
 
 	numDisabled := 0
-	for _, pcfg := range cfg {
+	for _, pcfg := range rulesCfg {
 		if _, ok := checkMap[pcfg.Name]; ok {
 			log.Warn().Str("name", pcfg.Name).Msg(semLogContext + " duplicate reference to doc-class... skipping")
 			continue

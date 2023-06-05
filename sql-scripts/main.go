@@ -22,6 +22,9 @@ var EmbeddedDocClassFSRootPath = "defs"
 //go:embed embedded-dictionary.yml
 var EmbeddedDictionary []byte
 
+//go:embed crawling-rules.yml
+var RulesConfigYaml []byte
+
 func main() {
 
 	const semLogContext = "sql-scripts::main"
@@ -35,7 +38,7 @@ func main() {
 	fmt.Printf("delete from cpx_doc_class;\n")
 	fmt.Printf("delete from cpx_field_dictionary;\n")
 
-	cfgs, err := crawlingrules.ReadYamlConfig(crawlingrules.RulesConfigYaml)
+	cfgs, err := crawlingrules.ReadYamlConfig(RulesConfigYaml)
 	if err != nil {
 		log.Fatal().Err(err).Msg(semLogContext)
 	}

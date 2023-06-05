@@ -12,5 +12,6 @@ func ReadYamlConfig(yamlData []byte) ([]Config, error) {
 		return nil, err
 	}
 
+	rulesCfg = arr
 	return arr, nil
 }
