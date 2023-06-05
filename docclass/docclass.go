@@ -5,6 +5,7 @@ import (
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/crawlingrules"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/fielddictionary"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/registry"
+	"github.com/rs/zerolog/log"
 )
 
 type DocumentClassConfig struct {
@@ -18,11 +19,22 @@ type DocumentClassConfig struct {
 }
 
 func InitDocumentClassRegistry(cfg DocumentClassConfig) error {
+
+	const semLogContext = "doc-class::init-registry"
+
+	var err error
 	if cfg.Mode == "blob" {
-		return initFromBlobStorage(cfg.StorageName, cfg.Container)
+		err = initFromBlobStorage(cfg.StorageName, cfg.Container)
+	} else {
+		err = initFromEmbeddedConfig(&cfg)
 	}
 
-	return initFromEmbeddedConfig(&cfg)
+	if err == nil {
+		registry.TraceRegistry()
+		log.Info().Int("num-classes", registry.Size()).Msg(semLogContext + " document class registry loaded")
+	}
+
+	return err
 }
 
 func initFromEmbeddedConfig(cfg *DocumentClassConfig) error {
