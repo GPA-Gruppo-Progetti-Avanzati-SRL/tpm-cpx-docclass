@@ -22,6 +22,10 @@ type Rule struct {
 	firedAt     time.Time
 }
 
+func (dcr *Rule) Name() string {
+	return dcr.cfg.Name
+}
+
 func (dcr *Rule) isCrawlable() bool {
 
 	now := time.Now()
