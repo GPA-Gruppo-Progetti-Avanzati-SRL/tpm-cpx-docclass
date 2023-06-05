@@ -7,9 +7,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-//go:embed embedded-dictionary.yml
-var EmbeddedDictionary []byte
-
 type Mapping struct {
 	Campo           string `mapstructure:"campo" yaml:"campo"`
 	DocumentMapping string `mapstructure:"documentMapping" yaml:"documentMapping"`

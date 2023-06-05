@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-common/util"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/crawlingrules"
@@ -11,6 +12,15 @@ import (
 	"os"
 	"strings"
 )
+
+// The folder contains a number of .yml files each one for a different class
+//
+//go:embed defs/*
+var EmbeddedDocClassFS embed.FS
+var EmbeddedDocClassFSRootPath = "defs"
+
+//go:embed embedded-dictionary.yml
+var EmbeddedDictionary []byte
 
 func main() {
 
@@ -36,7 +46,7 @@ func main() {
 	}
 	fmt.Printf("--- End of insert into cpx_registry: num-inserts=%d\n", len(cfgs))
 
-	fd, err := fielddictionary.ReadDictionaryFromYamlData(fielddictionary.EmbeddedDictionary)
+	fd, err := fielddictionary.ReadDictionaryFromYamlData(EmbeddedDictionary)
 	if err != nil {
 		log.Fatal().Err(err).Msg(semLogContext)
 	}
@@ -47,7 +57,7 @@ func main() {
 	}
 	fmt.Printf("--- End of insert into cpx_field_dictionary: num-inserts=%d\n", len(fd))
 
-	numEntries, err := registry.ReadRegistryFromEmbeddedData(registry.EmbeddedDocClassFS, registry.EmbeddedDocClassFSRootPath)
+	numEntries, err := registry.ReadRegistryFromEmbeddedData(EmbeddedDocClassFS, EmbeddedDocClassFSRootPath)
 	if err != nil {
 		log.Fatal().Err(err).Msg(semLogContext)
 	}

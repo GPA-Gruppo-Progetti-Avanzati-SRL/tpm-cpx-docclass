@@ -1,6 +1,7 @@
 package registry_test
 
 import (
+	"embed"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-az-common/storage/azbloblks"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-az-common/storage/azstoragecfg"
 	"github.com/GPA-Gruppo-Progetti-Avanzati-SRL/tpm-cpx-docclass/docclass/fielddictionary"
@@ -12,6 +13,15 @@ import (
 	"testing"
 )
 
+// The folder contains a number of .yml files each one for a different class
+//
+//go:embed defs/*
+var EmbeddedDocClassFS embed.FS
+var EmbeddedDocClassFSRootPath = "defs"
+
+//go:embed embedded-dictionary.yml
+var EmbeddedDictionary []byte
+
 const (
 	TargetContainer = "cpx-docclass-container"
 
@@ -22,10 +32,10 @@ const (
 func TestEmbeddedRegistry(t *testing.T) {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 
-	_, err := fielddictionary.ReadDictionaryFromYamlData(fielddictionary.EmbeddedDictionary)
+	_, err := fielddictionary.ReadDictionaryFromYamlData(EmbeddedDictionary)
 	require.NoError(t, err)
 
-	_, err = registry.ReadRegistryFromEmbeddedData(registry.EmbeddedDocClassFS, registry.EmbeddedDocClassFSRootPath)
+	_, err = registry.ReadRegistryFromEmbeddedData(EmbeddedDocClassFS, EmbeddedDocClassFSRootPath)
 	require.NoError(t, err)
 
 	registry.TraceRegistry()
