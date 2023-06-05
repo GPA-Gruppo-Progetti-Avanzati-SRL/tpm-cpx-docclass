@@ -19,10 +19,13 @@ const (
 	AZCommonBlobAccountKeyEnvVarName  = "AZCOMMON_BLOB_ACCTKEY"
 )
 
+//go:embed crawling-rules.yml
+var RulesConfigYaml []byte
+
 func TestEmbeddedCrawlingRules(t *testing.T) {
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 
-	cfgs, err := crawlingrules.ReadYamlConfig(crawlingrules.RulesConfigYaml)
+	cfgs, err := crawlingrules.ReadYamlConfig(RulesConfigYaml)
 	require.NoError(t, err)
 
 	r, err := crawlingrules.NewRing(cfgs)

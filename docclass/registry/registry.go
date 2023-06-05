@@ -11,6 +11,15 @@ func GetRegistry() map[string]model.DocClass {
 	return registry
 }
 
+func Size() int {
+	return len(registry)
+}
+
+func GetDocClass(n string) (model.DocClass, bool) {
+	d, ok := registry[n]
+	return d, ok
+}
+
 func IsConfigured(dcId string) bool {
 	_, ok := registry[dcId]
 	return ok
