@@ -134,7 +134,7 @@ type DocClass struct {
 
 func ReadDocClassYMLDefinition(fn string, fileContent []byte) (DocClass, error) {
 
-	const semLogContext = "doc-class-registry::read-doc-class-from-yaml"
+	const semLogContext = "doc-class::read-from-yaml"
 	log.Info().Str("fn", fn).Msg(semLogContext)
 	var err error
 

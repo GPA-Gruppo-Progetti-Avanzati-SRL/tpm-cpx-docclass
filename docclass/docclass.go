@@ -38,6 +38,10 @@ func InitDocumentClassRegistry(cfg DocumentClassConfig) error {
 }
 
 func initFromEmbeddedConfig(cfg *DocumentClassConfig) error {
+
+	const semLogContext = "doc-class::init-registry-from-embedded-config"
+	log.Info().Msg(semLogContext)
+
 	_, err := crawlingrules.ReadYamlConfig(cfg.CrawlingRules)
 	if err != nil {
 		return err
@@ -53,6 +57,9 @@ func initFromEmbeddedConfig(cfg *DocumentClassConfig) error {
 }
 
 func initFromBlobStorage(name string, container string) error {
+
+	const semLogContext = "doc-class::init-registry-from-blob-config"
+	log.Info().Str("storage-name", name).Str("container", container).Msg(semLogContext)
 	_, err := crawlingrules.ReadRulesFromBlobStorage(name, container)
 	if err != nil {
 		return err

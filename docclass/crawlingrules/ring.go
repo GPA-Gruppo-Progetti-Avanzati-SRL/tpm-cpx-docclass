@@ -10,11 +10,11 @@ import (
 
 var rulesCfg []Config
 
-func NewRing() (RuleRing, error) {
+func NewRing(applyPolicies bool) (RuleRing, error) {
 
 	const semLogContext = "doc-class-yaml::new-ring"
 
-	ring := RuleRing{cursor: -1}
+	ring := RuleRing{applyPolicies: applyPolicies, cursor: -1}
 
 	p := make([]Rule, 0)
 	checkMap := make(map[string]struct{})

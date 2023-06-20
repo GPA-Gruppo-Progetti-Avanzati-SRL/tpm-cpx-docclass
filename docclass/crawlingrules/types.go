@@ -26,7 +26,7 @@ func (dcr *Rule) Name() string {
 	return dcr.cfg.Name
 }
 
-func (dcr *Rule) isCrawlable() bool {
+func (dcr *Rule) isCrawlable(applyPolicies bool) bool {
 
 	now := time.Now()
 	dcr.lastCheckAt = now
@@ -35,19 +35,24 @@ func (dcr *Rule) isCrawlable() bool {
 	if !dcr.validIn.InRange(now) {
 		dcr.lastCheck = "ko-time-range"
 	} else {
-		switch dcr.cfg.Policy {
-		case "once":
-			if dcr.firedAt.IsZero() || dcr.lastCheck == "ko-time-range" || util.DayCompare(dcr.firedAt, now) != 0 {
-				b = true
-			} else {
-				dcr.lastCheck = "ko-once"
+
+		if applyPolicies {
+			switch dcr.cfg.Policy {
+			case "once":
+				if dcr.firedAt.IsZero() || dcr.lastCheck == "ko-time-range" || util.DayCompare(dcr.firedAt, now) != 0 {
+					b = true
+				} else {
+					dcr.lastCheck = "ko-once"
+				}
+			case "interval":
+				if dcr.firedAt.IsZero() || time.Now().Sub(dcr.firedAt) > dcr.cfg.Interval {
+					b = true
+				} else {
+					dcr.lastCheck = "ko-interval"
+				}
 			}
-		case "interval":
-			if dcr.firedAt.IsZero() || time.Now().Sub(dcr.firedAt) > dcr.cfg.Interval {
-				b = true
-			} else {
-				dcr.lastCheck = "ko-interval"
-			}
+		} else {
+			b = true
 		}
 	}
 
@@ -65,8 +70,9 @@ func (dcr *Rule) Crawl() {
 }
 
 type RuleRing struct {
-	rules  []Rule
-	cursor int // starts at -1
+	applyPolicies bool
+	rules         []Rule
+	cursor        int // starts at -1
 }
 
 func (dcs *RuleRing) current() Rule {
@@ -81,7 +87,7 @@ func (dcs *RuleRing) Next() (Rule, bool) {
 		if dcs.cursor == len(dcs.rules) {
 			dcs.cursor = 0
 		}
-		if dcs.rules[dcs.cursor].isCrawlable() {
+		if dcs.rules[dcs.cursor].isCrawlable(dcs.applyPolicies) {
 			return dcs.rules[dcs.cursor], true
 		}
 	}

@@ -40,7 +40,7 @@ func TestEmbeddedCrawlingRules(t *testing.T) {
 	_, err := crawlingrules.ReadYamlConfig(RulesConfigYaml)
 	require.NoError(t, err)
 
-	r, err := crawlingrules.NewRing()
+	r, err := crawlingrules.NewRing(true)
 	require.NoError(t, err)
 
 	for {
