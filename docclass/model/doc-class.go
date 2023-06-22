@@ -110,26 +110,32 @@ type IndexEntryValue struct {
 	SourceName string
 }
 
+type DistintaGEDConfig struct {
+	Name string `mapstructure:"name" yaml:"name"  json:"name"`
+	Ext  string `mapstructure:"ext" yaml:"ext" json:"ext"`
+}
+
 type DocClass struct {
-	Id               string                    `mapstructure:"class-id" yaml:"class-id" json:"class-id"`
-	Name             string                    `mapstructure:"name" yaml:"name"  json:"name"`
-	ProducedClassIds []string                  `mapstructure:"produced-class-ids" yaml:"produced-class-ids"  json:"produced-class-ids"`
-	Ext              string                    `mapstructure:"ext" yaml:"ext" json:"ext"`
-	CodCliente       string                    `mapstructure:"cod-cliente" yaml:"cod-cliente" json:"cod-cliente"`
-	MaxCpx           int                       `mapstructure:"max-cpx" yaml:"max-cpx" json:"max-cpx"`
-	MaxDocs          int                       `mapstructure:"max-docs" yaml:"max-docs" json:"max-docs"`
-	MaxSize          int                       `mapstructure:"max-size" yaml:"max-size" json:"max-size"`
-	Platform         string                    `mapstructure:"platform" yaml:"platform" json:"platform"`
-	Servizio         string                    `mapstructure:"servizio" yaml:"servizio" json:"servizio"`
-	Procedura        string                    `mapstructure:"procedura" yaml:"procedura" json:"procedura"`
-	Version          string                    `mapstructure:"version" yaml:"version" json:"version"`
-	PackageLayout    string                    `mapstructure:"package-layout" yaml:"package-layout" json:"package-layout"`
-	Index            []IndexEntryDefinition    `mapstructure:"index" yaml:"index" json:"index" json:"index"`
-	OnExported       []OnExportEntryDefinition `mapstructure:"on-exported" yaml:"on-exported" json:"on-exported" json:"on-exported"`
-	SqlQuery         string                    `mapstructure:"cos-query" yaml:"cos-query" json:"cos-query"`
-	PackageTtl       int                       `mapstructure:"pkg-ttl" yaml:"pkg-ttl" json:"pkg-ttl"`
-	DocumentTtl      int                       `mapstructure:"doc-ttl" yaml:"doc-ttl" json:"doc-ttl"`
-	DistintaGED      bool                      `mapstructure:"distinta-ged" yaml:"distinta-ged" json:"distinta-ged"`
+	Id                string                    `mapstructure:"class-id" yaml:"class-id" json:"class-id"`
+	Name              string                    `mapstructure:"name" yaml:"name"  json:"name"`
+	ProducedClassIds  []string                  `mapstructure:"produced-class-ids" yaml:"produced-class-ids"  json:"produced-class-ids"`
+	Ext               string                    `mapstructure:"ext" yaml:"ext" json:"ext"`
+	CodCliente        string                    `mapstructure:"cod-cliente" yaml:"cod-cliente" json:"cod-cliente"`
+	MaxCpx            int                       `mapstructure:"max-cpx" yaml:"max-cpx" json:"max-cpx"`
+	MaxDocs           int                       `mapstructure:"max-docs" yaml:"max-docs" json:"max-docs"`
+	MaxSize           int                       `mapstructure:"max-size" yaml:"max-size" json:"max-size"`
+	Platform          string                    `mapstructure:"platform" yaml:"platform" json:"platform"`
+	Servizio          string                    `mapstructure:"servizio" yaml:"servizio" json:"servizio"`
+	Procedura         string                    `mapstructure:"procedura" yaml:"procedura" json:"procedura"`
+	Version           string                    `mapstructure:"version" yaml:"version" json:"version"`
+	PackageLayout     string                    `mapstructure:"package-layout" yaml:"package-layout" json:"package-layout"`
+	Index             []IndexEntryDefinition    `mapstructure:"index" yaml:"index" json:"index" json:"index"`
+	OnExported        []OnExportEntryDefinition `mapstructure:"on-exported" yaml:"on-exported" json:"on-exported" json:"on-exported"`
+	SqlQuery          string                    `mapstructure:"cos-query" yaml:"cos-query" json:"cos-query"`
+	PackageTtl        int                       `mapstructure:"pkg-ttl" yaml:"pkg-ttl" json:"pkg-ttl"`
+	DocumentTtl       int                       `mapstructure:"doc-ttl" yaml:"doc-ttl" json:"doc-ttl"`
+	DistintaGED       bool                      `mapstructure:"distinta-ged" yaml:"distinta-ged" json:"distinta-ged"`
+	DistintaGEDConfig DistintaGEDConfig         `mapstructure:"distinta-ged-cfg" yaml:"distinta-ged-cfg" json:"distinta-ged-cfg"`
 }
 
 func ReadDocClassYMLDefinition(fn string, fileContent []byte) (DocClass, error) {
@@ -239,6 +245,10 @@ func (dc *DocClass) setDefaultValues() {
 		dc.ProducedClassIds = make([]string, 0)
 		dc.ProducedClassIds = append(dc.ProducedClassIds, dc.Id)
 	}
+
+	if dc.DistintaGED {
+		dc.SetDistintaGedDefaultValues()
+	}
 }
 
 func (dc *DocClass) ToJson() ([]byte, error) {
@@ -279,6 +289,16 @@ func (dc *DocClass) GetPackageName(packageId string, refTime time.Time) (string,
 	}
 
 	return string(n), mida, nil
+}
+
+func (dc *DocClass) SetDistintaGedDefaultValues() {
+	if dc.DistintaGEDConfig.Name == "" {
+		dc.DistintaGEDConfig.Name = dc.Name
+	}
+
+	if dc.DistintaGEDConfig.Ext == "" {
+		dc.DistintaGEDConfig.Ext = "csv"
+	}
 }
 
 func parseIndexEntryDefinitionExpression(v string) (IndexEntryDefinitionValueExpression, error) {
