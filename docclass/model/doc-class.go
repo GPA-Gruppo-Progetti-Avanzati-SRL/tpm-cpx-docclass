@@ -112,9 +112,9 @@ type IndexEntryValue struct {
 
 type IndexEntries []IndexEntryValue
 
-func (ie IndexEntries) FindEntryById(id string) int {
+func (ie IndexEntries) FindEntryByName(n string) int {
 	for i := 0; i < len(ie); i++ {
-		if id == ie[i].Id {
+		if n == ie[i].Name {
 			return i
 		}
 	}
