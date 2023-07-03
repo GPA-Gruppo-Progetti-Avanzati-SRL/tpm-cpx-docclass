@@ -110,6 +110,18 @@ type IndexEntryValue struct {
 	SourceName string
 }
 
+type IndexEntries []IndexEntryValue
+
+func (ie IndexEntries) FindEntryById(id string) int {
+	for i := 0; i < len(ie); i++ {
+		if id == ie[i].Id {
+			return i
+		}
+	}
+
+	return -1
+}
+
 type DistintaGEDConfig struct {
 	Name string `mapstructure:"name" yaml:"name"  json:"name"`
 	Ext  string `mapstructure:"ext" yaml:"ext" json:"ext"`
