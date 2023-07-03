@@ -178,7 +178,7 @@ func (dc *DocClass) MapToIndex(sourceMap map[string]interface{}) []IndexEntryVal
 	m := make([]IndexEntryValue, 0)
 
 	for _, ndx := range dc.Index {
-		v := IndexEntryValue{Id: ndx.Id, SourceName: ndx.Value, Value: ndx.EvaluateIndexEntry(sourceMap)}
+		v := IndexEntryValue{Id: ndx.Id, Name: ndx.Name, SourceName: ndx.Value, Value: ndx.EvaluateIndexEntry(sourceMap)}
 		m = append(m, v)
 	}
 
