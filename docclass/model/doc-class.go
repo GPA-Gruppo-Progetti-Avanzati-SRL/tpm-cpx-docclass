@@ -192,7 +192,7 @@ func (dc *DocClass) SqlQueryText() string {
 
 	q := dc.SqlQuery
 	now := time.Now().UTC()
-	for i := 1; i <= 4; i++ {
+	for i := 1; i <= 15; i++ {
 		nowMinusXDays := now.Add(durs[i]).Format(time.RFC3339Nano)
 		q = strings.Replace(q, fmt.Sprintf("{now-%dd}", i), nowMinusXDays, -1)
 	}
