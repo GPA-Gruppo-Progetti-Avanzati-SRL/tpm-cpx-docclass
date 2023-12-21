@@ -13,7 +13,7 @@ func ReadDictionaryFromYamlData(yamlData []byte) (FieldDictionary, error) {
 		return nil, err
 	}
 
-	fr := make(map[string]Mapping, 0)
+	fr := make(map[string]Mapping)
 	for _, f := range fm {
 		c := strings.TrimSpace(f.Campo)
 		// To fix stuff like clienti[{0}].pec and transforming to clienti[].pec

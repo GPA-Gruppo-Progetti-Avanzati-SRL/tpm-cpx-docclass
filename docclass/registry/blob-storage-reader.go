@@ -13,7 +13,7 @@ func ReadRegistryFromBlobStorage(storageName, cntName string) (int, error) {
 
 	const semLogContext = "doc-class-registry::read-from-blob-storage"
 
-	registry = make(map[string]model.DocClass, 0)
+	registry = make(map[string]model.DocClass)
 
 	lks, err := azbloblks.GetLinkedService(storageName)
 	if err != nil {

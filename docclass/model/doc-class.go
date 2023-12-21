@@ -188,7 +188,11 @@ func (dc *DocClass) MapToIndex(sourceMap map[string]interface{}) []IndexEntryVal
 func (dc *DocClass) SqlQueryText() string {
 	const semLogContext = "doc-class::sql-query-text"
 
-	durs := []time.Duration{0, -24 * 1 * time.Hour, -24 * 2 * time.Hour, -24 * 3 * time.Hour, -24 * 4 * time.Hour}
+	durs := []time.Duration{0}
+
+	for i := 1; i <= 15; i++ {
+		durs = append(durs, time.Duration(-24*i)*time.Hour)
+	}
 
 	q := dc.SqlQuery
 	now := time.Now().UTC()
