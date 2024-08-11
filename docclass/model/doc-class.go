@@ -395,6 +395,10 @@ func formatProperty(v interface{}, dataType string, format string, sourceFormat 
 				s = t.Format(format)
 			}
 		}
+	case "int":
+		// Segnalazione Tamorri - 12/05/2023 CPX prodotti dalla doc class pt_spid
+		// Modifica poi persa e segnalazione ulteriore 09/08/2024
+		fallthrough
 	case "number":
 		if b, ok := v.(bool); ok {
 			if b {
