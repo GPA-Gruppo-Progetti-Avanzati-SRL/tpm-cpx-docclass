@@ -54,7 +54,7 @@ docClass:
     value: "lookup:modalita_pratica"
   - name: flag_conserv
     value: "lookup:flag_conserv"
-    data-type: number
+    data-type: int
     format: "%d"
   - name: flag_correzione
     value: "lookup:flag_correzione"
